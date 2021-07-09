@@ -1,20 +1,16 @@
 package com.github.lipinskipawel;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public final class VersionNumber<T> {
-    private final Optional<T> value;
-    private final int version;
+    private final Map<Integer, List<T>> state;
 
     VersionNumber() {
-        this.value = Optional.empty();
-        this.version = 0;
-    }
-
-    private VersionNumber(final T value, final int version) {
-        this.value = Optional.of(value);
-        this.version = version;
+        this.state = new TreeMap<>();
     }
 
     /**
@@ -25,30 +21,20 @@ public final class VersionNumber<T> {
      * @return new value with new value and new version
      */
     public VersionNumber<T> insert(final T value, final int givenVersion) {
-        if (givenVersion > this.version) {
-            return this;
-        }
-        return new VersionNumber<>(value, this.version + 1);
+        this.state.compute(givenVersion, (k, v) -> {
+            if (v == null) {
+                final var list = new ArrayList<T>();
+                list.add(value);
+                return list;
+            } else {
+                v.add(value);
+                return v;
+            }
+        });
+        return this;
     }
 
-    public Optional<T> value() {
-        return this.value;
-    }
-
-    int version() {
-        return this.version;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        VersionNumber<?> that = (VersionNumber<?>) o;
-        return version == that.version && Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value, version);
+    public Map<Integer, List<T>> value() {
+        return new HashMap<>(this.state);
     }
 }
