@@ -1,6 +1,7 @@
 # Algorithms
 
-This repository contains implementation of algorithms. Currently there is:
+This repository contains implementation and description of algorithms. Currently
+there are:
 
 - Bloom Filter
 - Version number
@@ -8,4 +9,4 @@ This repository contains implementation of algorithms. Currently there is:
 ## Disclaimer
 
 Any of those algorithms implementations are not production ready. There are
-serving as experiments and their nature is educational.
+serving as experiments and their nature is to educate by example.
