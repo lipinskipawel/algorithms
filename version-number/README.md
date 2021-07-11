@@ -9,4 +9,4 @@ data conflict thus there is a need for conflictless data structure. Version
 number will guarantee that any update that is concurrent will not be lost. It
 holds this guarantee by maintaining separate versions of the given object.
 
-[dotted version vector]: (https://arxiv.org/abs/1011.5808)
+[dotted version vector]: https://arxiv.org/abs/1011.5808
