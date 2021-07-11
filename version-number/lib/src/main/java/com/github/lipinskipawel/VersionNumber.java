@@ -21,17 +21,19 @@ public final class VersionNumber<T> {
      * @return new value with new value and new version
      */
     public VersionNumber<T> insert(final T value, final int givenVersion) {
-        this.state.compute(givenVersion, (k, v) -> {
-            if (v == null) {
-                final var list = new ArrayList<T>();
-                list.add(value);
-                return list;
-            } else {
-                v.add(value);
-                return v;
-            }
-        });
+        if (this.state.get(givenVersion) == null) {
+            this.state.clear();
+            this.state.put(givenVersion, List.of(value));
+        } else {
+            this.state.computeIfPresent(givenVersion, (k, v) -> copyGivenListAndAddElement(v, value));
+        }
         return this;
+    }
+
+    private List<T> copyGivenListAndAddElement(final List<T> list, final T element) {
+        final var copy = new ArrayList<>(list);
+        copy.add(element);
+        return copy;
     }
 
     public Map<Integer, List<T>> value() {

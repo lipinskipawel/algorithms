@@ -1,6 +1,5 @@
 package com.github.lipinskipawel;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,6 @@ class VersionNumberTest {
         }
 
         @Test
-        @Disabled("TODO - override smaller versions when client did merge")
         void shouldContainSecondElementWhenProvidedNextVersion() {
             final var subject = new VersionNumber<String>();
 
