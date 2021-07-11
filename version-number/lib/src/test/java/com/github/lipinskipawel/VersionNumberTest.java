@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class VersionNumberTest {
 
     @Nested
-    @DisplayName("object checks")
+    @DisplayName("no simultaneous modifications")
     class ObjectChecks {
         @Test
         void shouldContainEmptyValue() {
@@ -32,6 +32,7 @@ class VersionNumberTest {
         }
 
         @Test
+        @DisplayName("client resolves conflict by providing next version")
         void shouldContainSecondElementWhenProvidedNextVersion() {
             final var subject = new VersionNumber<String>();
 
@@ -43,9 +44,10 @@ class VersionNumberTest {
     }
 
     @Nested
-    @DisplayName("concurrent checks")
+    @DisplayName("simultaneous modifications")
     class ConcurrentChecks {
         @Test
+        @DisplayName("client doesn't resolve conflict")
         void shouldContainTwoElementsAfterSecondConcurrentUpdate() {
             final var subject = new VersionNumber<String>();
 
